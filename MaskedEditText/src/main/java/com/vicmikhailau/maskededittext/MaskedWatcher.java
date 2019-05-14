@@ -49,15 +49,16 @@ public class MaskedWatcher implements TextWatcher {
 
         if (deltaLength > 0) {
             newCursorPosition += deltaLength;
+            newCursorPosition = Math.max(0, Math.min(newCursorPosition, formattedString.length()));
         } else if (deltaLength < 0) {
             newCursorPosition -= 1;
+            newCursorPosition = Math.max(0, Math.min(newCursorPosition, formattedString.length()));
         } else {
             Mask mask = mMaskFormatter.get().mMask;
             newCursorPosition = Math.max(1, Math.min(newCursorPosition, mMaskFormatter.get().getMaskLength()));
             if (mask.get(newCursorPosition - 1).isPrepopulate())
                 newCursorPosition -= 1;
         }
-        newCursorPosition = Math.max(0, Math.min(newCursorPosition, formattedString.length()));
         editText.setSelection(newCursorPosition);
     }
 
